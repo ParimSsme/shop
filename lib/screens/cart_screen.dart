@@ -14,12 +14,12 @@ class CartScreen extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Cart'),
+        title: const Text('Your Cart'),
       ),
       body: Column(
         children: [
           Card(
-            margin: EdgeInsets.all(15),
+            margin: const EdgeInsets.all(15),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -58,7 +58,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
               itemCount: cart.items.length,

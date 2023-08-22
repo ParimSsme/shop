@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
+  final List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -67,7 +67,7 @@ class Products with ChangeNotifier {
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
-      print('...');
+      // ...
     }
   }
 

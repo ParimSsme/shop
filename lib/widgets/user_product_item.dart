@@ -9,7 +9,7 @@ class UserProductItem extends StatelessWidget {
   final String title;
   final String imageUrl;
 
-  UserProductItem(this.id, this.title, this.imageUrl, {super.key});
+  const UserProductItem(this.id, this.title, this.imageUrl, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class UserProductItem extends StatelessWidget {
       leading: CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
       ),
-      trailing: Container(
+      trailing: SizedBox(
         width: 100,
         child: Row(
           children: <Widget>[
@@ -30,11 +30,11 @@ class UserProductItem extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: () {
                 Provider.of<Products>(context, listen: false).deleteProduct(id);
               },
-              color: Theme.of(context).errorColor,
+              color: Theme.of(context).colorScheme.error,
             ),
           ],
         ),

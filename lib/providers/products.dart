@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import './product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
+  final List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -68,7 +68,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> addProduct(Product product) {
-    const url = 'https://shop-20586-default-rtdb.firebaseio.com//products.json';
+    const url = 'https://shop-20586-default-rtdb.firebaseio.com/products.json';
     return http
         .post(
       Uri.parse(url),

@@ -68,7 +68,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> addProduct(Product product) {
-    const url = 'https://shop-20586-default-rtdb.firebaseio.com/products.json';
+    const url = 'https://flutter-update.firebaseio.com/products.json';
     return http
         .post(
       Uri.parse(url),
@@ -91,6 +91,9 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 

@@ -4,8 +4,6 @@ import '../providers/product.dart';
 import '../providers/products.dart';
 
 class EditProductScreen extends StatefulWidget {
-  const EditProductScreen({super.key});
-
   static const routeName = '/edit-product';
 
   @override
@@ -46,7 +44,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       final productId = ModalRoute.of(context)?.settings.arguments as String?;
       if (productId != null) {
         _editedProduct =
-            Provider.of<Products>(context, listen: false).findById(productId ?? '');
+            Provider.of<Products>(context, listen: false).findById(productId);
         _initValues = {
           'title': _editedProduct.title,
           'description': _editedProduct.description,
@@ -103,7 +101,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
     } else {
       Provider.of<Products>(context, listen: false)
           .addProduct(_editedProduct)
-          .then((_) {
+          .catchError((error) {
+        return showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('An error occurred!'),
+            content: const Text('Something went wrong.'),
+            actions: <Widget>[
+              TextButton(child: const Text('Okay'), onPressed: () {
+                Navigator.of(ctx).pop();
+              },)
+            ],
+          ),
+        );
+      }).then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -251,18 +262,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onFieldSubmitted: (_) {
                         _saveForm();
                       },
-                      validator: (value) {
-                        final val = value ?? '';
-                        if (val.isEmpty) {
+                      validator: (val) {
+                        final value = val ?? "";
+                        if (value.isEmpty) {
                           return 'Please enter an image URL.';
                         }
-                        if (!val.startsWith('http') &&
-                            !val.startsWith('https')) {
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
                           return 'Please enter a valid URL.';
                         }
-                        if (!val.endsWith('.png') &&
-                            !val.endsWith('.jpg') &&
-                            !val.endsWith('.jpeg')) {
+                        if (!value.endsWith('.png') &&
+                            !value.endsWith('.jpg') &&
+                            !value.endsWith('.jpeg')) {
                           return 'Please enter a valid image URL.';
                         }
                         return null;
@@ -270,11 +281,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onSaved: (value) {
                         _editedProduct = Product(
                           title: _editedProduct.title,
-                            price: _editedProduct.price,
-                            description: _editedProduct.description,
-                            imageUrl: value ?? '',
-                            id: _editedProduct.id,
-                            isFavorite: _editedProduct.isFavorite,
+                          price: _editedProduct.price,
+                          description: _editedProduct.description,
+                          imageUrl: value ?? '',
+                          id: _editedProduct.id,
+                          isFavorite: _editedProduct.isFavorite,
                         );
                       },
                     ),

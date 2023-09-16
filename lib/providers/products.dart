@@ -67,7 +67,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://flutter-update.firebaseio.com/products.json';
+    const url = 'https://shop-20586-default-rtdb.firebaseio.com/products.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -90,7 +90,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url = 'https://flutter-update.firebaseio.com/products.json';
+    const url = 'https://shop-20586-default-rtdb.firebaseio.com/products.json';
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -121,7 +121,7 @@ class Products with ChangeNotifier {
   Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      final url = 'https://flutter-update.firebaseio.com/products/$id.json';
+      final url = 'https://shop-20586-default-rtdb.firebaseio.com/products/$id.json';
       await http.patch(Uri.parse(url),
           body: json.encode({
             'title': newProduct.title,
@@ -137,7 +137,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = 'https://flutter-update.firebaseio.com/products/$id.json';
+    final url = 'https://shop-20586-default-rtdb.firebaseio.com/products/$id.json';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);

@@ -12,7 +12,7 @@ class Auth with ChangeNotifier {
     const url =
         'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDqmNxCM4FppQlaL_baWYhnqSrGmoanh4g';
     final response = await http.post(
-      url,
+      Uri.parse(url),
       body: json.encode(
         {
           'email': email,

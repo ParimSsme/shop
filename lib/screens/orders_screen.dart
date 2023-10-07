@@ -17,7 +17,7 @@ class OrdersScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Your Orders'),
       ),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(),
       body: FutureBuilder(
         future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
         builder: (ctx, dataSnapshot) {

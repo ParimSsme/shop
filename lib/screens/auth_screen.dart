@@ -123,7 +123,7 @@ class _AuthCardState extends State<AuthCard>
         curve: Curves.fastOutSlowIn,
       ),
     );
-    _heightAnimation.addListener(() => setState(() {}));
+    // _heightAnimation.addListener(() => setState(() {}));
   }
 
   @override
@@ -219,12 +219,16 @@ class _AuthCardState extends State<AuthCard>
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 8.0,
-      child: Container(
-        // height: _authMode == AuthMode.Signup ? 320 : 260,
-        height: _heightAnimation.value.height,
-        constraints: BoxConstraints(minHeight: _heightAnimation.value.height),
-        width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(16.0),
+      child: AnimatedBuilder(
+        animation: _heightAnimation,
+        builder: (ctx, ch) => Container(
+          // height: _authMode == AuthMode.Signup ? 320 : 260,
+            height: _heightAnimation.value.height,
+            constraints:
+            BoxConstraints(minHeight: _heightAnimation.value.height),
+            width: deviceSize.width * 0.75,
+            padding: EdgeInsets.all(16.0),
+            child: ch),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -264,10 +268,10 @@ class _AuthCardState extends State<AuthCard>
                     obscureText: true,
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
-                            if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
-                            }
-                          }
+                      if (value != _passwordController.text) {
+                        return 'Passwords do not match!';
+                      }
+                    }
                         : null,
                   ),
                 SizedBox(
@@ -288,7 +292,7 @@ class _AuthCardState extends State<AuthCard>
                     style: OutlinedButton.styleFrom(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding:
-                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -302,7 +306,7 @@ class _AuthCardState extends State<AuthCard>
                   ),
                   style: TextButton.styleFrom(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                    EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   onPressed: _switchAuthMode,

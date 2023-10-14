@@ -1,8 +1,10 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import './product.dart';
+
 import '../models/http_exception.dart';
+import './product.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -40,7 +42,6 @@ class Products with ChangeNotifier {
     // ),
   ];
   // var _showFavoritesOnly = false;
-
   final String authToken;
   final String userId;
 
@@ -91,7 +92,8 @@ class Products with ChangeNotifier {
           title: prodData['title'],
           description: prodData['description'],
           price: prodData['price'],
-          isFavorite: favoriteData == null ? false : favoriteData[prodId] ?? false,
+          isFavorite:
+              favoriteData == null ? false : favoriteData[prodId] ?? false,
           imageUrl: prodData['imageUrl'],
         ));
       });

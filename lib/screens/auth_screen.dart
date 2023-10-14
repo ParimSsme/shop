@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/http_exception.dart';
+
 import '../providers/auth.dart';
+import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -104,8 +105,7 @@ class _AuthCardState extends State<AuthCard>
   var _isLoading = false;
   final _passwordController = TextEditingController();
   late AnimationController _controller;
-  late Animation<Offset> _slideAnimation;
-  late Animation<double> _opacityAnimation;
+  late Animation<Size> _heightAnimation;
 
   @override
   void initState() {
@@ -116,23 +116,20 @@ class _AuthCardState extends State<AuthCard>
         milliseconds: 300,
       ),
     );
-    _slideAnimation = Tween<Offset>(
-      begin: Offset(0, -1.5),
-      end: Offset(0, 0),
-    ).animate(
+    _heightAnimation = Tween<Size>(
+            begin: Size(double.infinity, 260), end: Size(double.infinity, 320))
+        .animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.fastOutSlowIn,
       ),
-    );
-    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
     );
     // _heightAnimation.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
+    // TODO: implement dispose
     super.dispose();
     _controller.dispose();
   }
@@ -141,17 +138,17 @@ class _AuthCardState extends State<AuthCard>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred!'),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Okay'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
+            title: Text('An Error Occurred!'),
+            content: Text(message),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              )
+            ],
+          ),
     );
   }
 
@@ -197,6 +194,7 @@ class _AuthCardState extends State<AuthCard>
           'Could not authenticate you. Please try again later.';
       _showErrorDialog(errorMessage);
     }
+
     setState(() {
       _isLoading = false;
     });
@@ -224,15 +222,16 @@ class _AuthCardState extends State<AuthCard>
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 8.0,
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-        height: _authMode == AuthMode.Signup ? 320 : 260,
-        // height: _heightAnimation.value.height,
-        constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
-        width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(16.0),
+      child: AnimatedBuilder(
+        animation: _heightAnimation,
+        builder: (ctx, ch) => Container(
+            // height: _authMode == AuthMode.Signup ? 320 : 260,
+            height: _heightAnimation.value.height,
+            constraints:
+                BoxConstraints(minHeight: _heightAnimation.value.height),
+            width: deviceSize.width * 0.75,
+            padding: EdgeInsets.all(16.0),
+            child: ch),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -248,7 +247,7 @@ class _AuthCardState extends State<AuthCard>
                     }
                   },
                   onSaved: (value) {
-                    _authData['email'] = value ?? "";
+                    _authData['email'] = value ?? '';
                   },
                 ),
                 TextFormField(
@@ -262,36 +261,22 @@ class _AuthCardState extends State<AuthCard>
                     }
                   },
                   onSaved: (value) {
-                    _authData['password'] = value ?? "";
+                    _authData['password'] = value ?? '';
                   },
                 ),
-                AnimatedContainer(
-                  constraints: BoxConstraints(
-                    minHeight: _authMode == AuthMode.Signup ? 60 : 0,
-                    maxHeight: _authMode == AuthMode.Signup ? 120 : 0,
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
+                    enabled: _authMode == AuthMode.Signup,
+                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    obscureText: true,
+                    validator: _authMode == AuthMode.Signup
+                        ? (value) {
+                            if (value != _passwordController.text) {
+                              return 'Passwords do not match!';
+                            }
+                          }
+                        : null,
                   ),
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
-                  child: FadeTransition(
-                    opacity: _opacityAnimation,
-                    child: SlideTransition(
-                      position: _slideAnimation,
-                      child: TextFormField(
-                        enabled: _authMode == AuthMode.Signup,
-                        decoration:
-                            InputDecoration(labelText: 'Confirm Password'),
-                        obscureText: true,
-                        validator: _authMode == AuthMode.Signup
-                            ? (value) {
-                                if (value != _passwordController.text) {
-                                  return 'Passwords do not match!';
-                                }
-                              }
-                            : null,
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -307,27 +292,21 @@ class _AuthCardState extends State<AuthCard>
                                 .button
                                 ?.color)),
                     onPressed: _submit,
-                    style: OutlinedButton.styleFrom(
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      foregroundColor: Theme.of(context).primaryColor,
-                    ),
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    // padding:
+                    //     EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                    // color: Theme.of(context).primaryColor,
+                    // textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
                 TextButton(
                   child: Text(
-                    '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD',
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                  ),
-                  style: TextButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
+                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
+                  // padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                  // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  // textColor: Theme.of(context).primaryColor,
                 ),
               ],
             ),

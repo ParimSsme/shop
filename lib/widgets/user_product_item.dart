@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/products.dart';
 import '../screens/edit_product_screen.dart';
+import '../providers/products.dart';
 
 class UserProductItem extends StatelessWidget {
   final String id;
   final String title;
   final String imageUrl;
 
-  const UserProductItem(this.id, this.title, this.imageUrl, {super.key});
+  UserProductItem(this.id, this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,12 @@ class UserProductItem extends StatelessWidget {
       leading: CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
       ),
-      trailing: SizedBox(
+      trailing: Container(
         width: 100,
         child: Row(
           children: <Widget>[
             IconButton(
-              icon: const Icon(Icons.edit),
+              icon: Icon(Icons.edit),
               onPressed: () {
                 Navigator.of(context)
                     .pushNamed(EditProductScreen.routeName, arguments: id);
@@ -32,23 +32,20 @@ class UserProductItem extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             IconButton(
-              icon: const Icon(Icons.delete),
+              icon: Icon(Icons.delete),
               onPressed: () async {
                 try {
                   await Provider.of<Products>(context, listen: false)
                       .deleteProduct(id);
                 } catch (error) {
                   scaffold.showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Deleting failed!',
-                        textAlign: TextAlign.center,
-                      ),
+                    SnackBar(
+                      content: Text('Deleting failed!', textAlign: TextAlign.center,),
                     ),
                   );
                 }
               },
-              color: Theme.of(context).colorScheme.error,
+              color: Theme.of(context).errorColor,
             ),
           ],
         ),

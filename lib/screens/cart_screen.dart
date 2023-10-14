@@ -8,6 +8,8 @@ import '../providers/orders.dart';
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
 
+  const CartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
@@ -18,17 +20,17 @@ class CartScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Card(
-            margin: EdgeInsets.all(15),
+            margin: const EdgeInsets.all(15),
             child: Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Total',
                     style: TextStyle(fontSize: 20),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Chip(
                     label: Text(
                       '\$${cart.totalAmount.toStringAsFixed(2)}',
@@ -71,7 +73,7 @@ class OrderButton extends StatefulWidget {
   final Cart cart;
 
   @override
-  _OrderButtonState createState() => _OrderButtonState();
+  State<OrderButton> createState() => _OrderButtonState();
 }
 
 class _OrderButtonState extends State<OrderButton> {

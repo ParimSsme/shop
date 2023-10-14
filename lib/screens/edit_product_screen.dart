@@ -8,7 +8,7 @@ class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
 
   @override
-  _EditProductScreenState createState() => _EditProductScreenState();
+  State<EditProductScreen> createState() => _EditProductScreenState();
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
@@ -103,11 +103,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
         await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: Text('An error occurred!'),
-                content: Text('Something went wrong.'),
+                title: const Text('An error occurred!'),
+                content: const Text('Something went wrong.'),
                 actions: <Widget>[
                   TextButton(
-                    child: Text('Okay'),
+                    child: const Text('Okay'),
                     onPressed: () {
                       Navigator.of(ctx).pop();
                     },
@@ -134,16 +134,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: const Text('Edit Product'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: _saveForm,
           ),
         ],
       ),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Padding(

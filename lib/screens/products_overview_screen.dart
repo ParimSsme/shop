@@ -14,8 +14,10 @@ enum FilterOptions {
 }
 
 class ProductsOverviewScreen extends StatefulWidget {
+  const ProductsOverviewScreen({super.key});
+
   @override
-  _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
+  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
@@ -64,27 +66,27 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 }
               });
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.more_vert,
             ),
-            itemBuilder: (_) => [
+            itemBuilder: (_) => const [
                   PopupMenuItem(
-                    child: Text('Only Favorites'),
                     value: FilterOptions.Favorites,
+                    child: Text('Only Favorites'),
                   ),
                   PopupMenuItem(
-                    child: Text('Show All'),
                     value: FilterOptions.All,
+                    child: Text('Show All'),
                   ),
                 ],
           ),
           Consumer<Cart>(
             builder: (_, cart, ch) => BadgeWidget(
-                  child: ch ?? const SizedBox(),
                   value: cart.itemCount.toString(),
+                  child: ch ?? const SizedBox(),
                 ),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart,
               ),
               onPressed: () {
@@ -96,7 +98,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       ),
       drawer: AppDrawer(),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ProductsGrid(_showOnlyFavorites),

@@ -119,7 +119,7 @@ class _AuthCardState extends State<AuthCard>
       ),
     );
     _heightAnimation = Tween<Size>(
-            begin: Size(double.infinity, 260), end: Size(double.infinity, 320))
+            begin: const Size(double.infinity, 260), end: const Size(double.infinity, 320))
         .animate(
       CurvedAnimation(
         parent: _controller,
@@ -140,11 +140,11 @@ class _AuthCardState extends State<AuthCard>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-            title: Text('An Error Occurred!'),
+            title: const Text('An Error Occurred!'),
             content: Text(message),
             actions: <Widget>[
               TextButton(
-                child: Text('Okay'),
+                child: const Text('Okay'),
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
@@ -232,7 +232,7 @@ class _AuthCardState extends State<AuthCard>
             constraints:
                 BoxConstraints(minHeight: _heightAnimation.value.height),
             width: deviceSize.width * 0.75,
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: ch),
         child: Form(
           key: _formKey,
@@ -240,13 +240,14 @@ class _AuthCardState extends State<AuthCard>
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  decoration: const InputDecoration(labelText: 'E-Mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if ((value?.isEmpty == true) ||
                         !(value?.contains('@') == true)) {
                       return 'Invalid email!';
                     }
+                    return '';
                   },
                   onSaved: (value) {
                     _authData['email'] = value ?? '';
@@ -261,6 +262,7 @@ class _AuthCardState extends State<AuthCard>
                     if (value.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
+                    return '';
                   },
                   onSaved: (value) {
                     _authData['password'] = value ?? '';
@@ -269,13 +271,14 @@ class _AuthCardState extends State<AuthCard>
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    decoration: const InputDecoration(labelText: 'Confirm Password'),
                     obscureText: true,
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
                             }
+                            return '';
                           }
                         : null,
                   ),

@@ -9,7 +9,7 @@ class UserProductItem extends StatelessWidget {
   final String title;
   final String imageUrl;
 
-  UserProductItem(this.id, this.title, this.imageUrl);
+  UserProductItem(this.id, this.title, this.imageUrl, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class UserProductItem extends StatelessWidget {
         child: Row(
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
               onPressed: () {
                 Navigator.of(context)
                     .pushNamed(EditProductScreen.routeName, arguments: id);
@@ -32,14 +32,14 @@ class UserProductItem extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: () async {
                 try {
                   await Provider.of<Products>(context, listen: false)
                       .deleteProduct(id);
                 } catch (error) {
                   scaffold.showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Deleting failed!', textAlign: TextAlign.center,),
                     ),
                   );

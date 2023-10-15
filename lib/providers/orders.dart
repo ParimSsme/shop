@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop/providers/constants.dart';
 
 import './cart.dart';
 
@@ -31,7 +32,7 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchAndSetOrders() async {
-    final url = 'https://shop-20586-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken';
+    final url = '${ProviderConstants.baseUrl}orders/$userId.json?auth=$authToken';
     final response = await http.get(Uri.parse(url));
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>?;

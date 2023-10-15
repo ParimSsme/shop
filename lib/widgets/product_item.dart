@@ -7,6 +7,8 @@ import '../providers/cart.dart';
 import '../providers/auth.dart';
 
 class ProductItem extends StatelessWidget {
+  const ProductItem({super.key});
+
   // final String id;
   // final String title;
   // final String imageUrl;

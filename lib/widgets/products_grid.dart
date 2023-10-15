@@ -19,7 +19,7 @@ class ProductsGrid extends StatelessWidget {
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
             // builder: (c) => products[i],
             value: products[i],
-            child: ProductItem(
+            child: const ProductItem(
                 // products[i].id,
                 // products[i].title,
                 // products[i].imageUrl,

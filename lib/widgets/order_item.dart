@@ -8,10 +8,10 @@ import '../providers/orders.dart' as ord;
 class OrderItem extends StatefulWidget {
   final ord.OrderItem order;
 
-  OrderItem(this.order);
+  const OrderItem(this.order, {super.key});
 
   @override
-  _OrderItemState createState() => _OrderItemState();
+  State<OrderItem> createState() => _OrderItemState();
 }
 
 class _OrderItemState extends State<OrderItem> {
@@ -49,14 +49,14 @@ class _OrderItemState extends State<OrderItem> {
                             children: <Widget>[
                               Text(
                                 prod.title,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
                                 '${prod.quantity}x \$${prod.price}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.grey,
                                 ),

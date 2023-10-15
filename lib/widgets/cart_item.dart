@@ -15,7 +15,7 @@ class CartItem extends StatelessWidget {
     this.productId,
     this.price,
     this.quantity,
-    this.title,
+    this.title, {super.key}
   );
 
   @override
@@ -25,8 +25,8 @@ class CartItem extends StatelessWidget {
       background: Container(
         color: Theme.of(context).errorColor,
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: 20),
-        margin: EdgeInsets.symmetric(
+        padding: const EdgeInsets.only(right: 20),
+        margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
         ),
@@ -53,7 +53,7 @@ class CartItem extends StatelessWidget {
                     },
                   ),
                   TextButton(
-                    child: Text('Yes'),
+                    child: const Text('Yes'),
                     onPressed: () {
                       Navigator.of(ctx).pop(true);
                     },
@@ -71,11 +71,11 @@ class CartItem extends StatelessWidget {
           vertical: 4,
         ),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ListTile(
             leading: CircleAvatar(
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: FittedBox(
                   child: Text('\$$price'),
                 ),

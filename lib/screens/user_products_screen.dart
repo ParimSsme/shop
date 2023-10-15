@@ -30,12 +30,12 @@ class UserProductsScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: FutureBuilder(
         future: _refreshProducts(context),
         builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(),
                   )
                 : RefreshIndicator(

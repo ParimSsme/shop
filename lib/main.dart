@@ -54,20 +54,20 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Lato',
           ),
           home: auth.isAuth
-              ? ProductsOverviewScreen()
+              ? const ProductsOverviewScreen()
               : FutureBuilder(
             future: auth.tryAutoLogin(),
             builder: (ctx, authResultSnapshot) =>
             authResultSnapshot.connectionState ==
                 ConnectionState.waiting
-                ? SplashScreen()
-                : AuthScreen(),
+                ? const SplashScreen()
+                : const AuthScreen(),
           ),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
-            CartScreen.routeName: (ctx) => CartScreen(),
-            OrdersScreen.routeName: (ctx) => OrdersScreen(),
-            UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+            CartScreen.routeName: (ctx) => const CartScreen(),
+            OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+            UserProductsScreen.routeName: (ctx) => const UserProductsScreen(),
             EditProductScreen.routeName: (ctx) => EditProductScreen(),
           },
         ),

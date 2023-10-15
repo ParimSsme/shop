@@ -8,9 +8,11 @@ import '../widgets/app_drawer.dart';
 class OrdersScreen extends StatelessWidget {
   static const routeName = '/orders';
 
+  const OrdersScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    print('building orders');
+
     // final orderData = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(

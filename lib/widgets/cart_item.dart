@@ -10,7 +10,7 @@ class CartItem extends StatelessWidget {
   final int quantity;
   final String title;
 
-  CartItem(
+  const CartItem(
     this.id,
     this.productId,
     this.price,
@@ -23,7 +23,7 @@ class CartItem extends StatelessWidget {
     return Dismissible(
       key: ValueKey(id),
       background: Container(
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
         margin: const EdgeInsets.symmetric(
@@ -47,7 +47,7 @@ class CartItem extends StatelessWidget {
                 ),
                 actions: <Widget>[
                   TextButton(
-                    child: Text('No'),
+                    child: const Text('No'),
                     onPressed: () {
                       Navigator.of(ctx).pop(false);
                     },
@@ -66,7 +66,7 @@ class CartItem extends StatelessWidget {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       child: Card(
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
         ),

@@ -40,7 +40,7 @@ class _OrderWidgetState extends State<OrderWidget> {
               ),
             ),
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               height: _expanded ? min(widget.order.products.length * 20.0 + 10, 100) : 0,
               child: ListView(

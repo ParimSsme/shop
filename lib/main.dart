@@ -14,9 +14,11 @@ import './screens/user_products_screen.dart';
 import './screens/edit_product_screen.dart';
 import './screens/auth_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -64,11 +66,11 @@ class MyApp extends StatelessWidget {
                 : const AuthScreen(),
           ),
           routes: {
-            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+            ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
             CartScreen.routeName: (ctx) => const CartScreen(),
             OrdersScreen.routeName: (ctx) => const OrdersScreen(),
             UserProductsScreen.routeName: (ctx) => const UserProductsScreen(),
-            EditProductScreen.routeName: (ctx) => EditProductScreen(),
+            EditProductScreen.routeName: (ctx) => const EditProductScreen(),
           },
         ),
       ),
